@@ -82,8 +82,12 @@ const Logo = styled.h1`
 const Navbar = (props) => {
   //   const [dropdown, setDropdown] = useState(false);
   const [display, setDisplay] = useState('none');
-  const quantity = useSelector(state => state.cart.quantity)
-
+  
+  const user = useSelector((state) => state.user.currentUser)
+  const quantity = useSelector((state) => state.cart.quantity);
+  const isLogin = localStorage.getItem('USER_ID') && localStorage.getItem('USER_ID') ? true : false;
+  
+  console.log('isLogin', localStorage.getItem('USER_TOKEN'))
   const handleMenu = () => {
     if (display == 'none') {
       setDisplay('block');
@@ -106,11 +110,23 @@ const Navbar = (props) => {
           <Logo>BOOKSTORE</Logo>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem onClick={handleMenu}>
-            SIGN IN
+          <Link style={{ color: 'white' }} to='/register'>
+            <MenuItem>REGISTER</MenuItem>
+          </Link>
+          {isLogin ? (
+            <MenuItem onClick={handleMenu}>
+              {user && user.username}
             <Dropdown item={menuItem} display={display} close={handleMenu} />
-          </MenuItem>
+          </MenuItem> 
+          ) : (
+          <Link style={{ color: 'white' }} to='/login'>
+            <MenuItem>
+              SIGN IN
+            </MenuItem>
+          </Link> )
+          
+          }
+          
           <Link to='/cart'>
             <MenuItem>
               <Badge badgeContent={quantity} color='primary'>

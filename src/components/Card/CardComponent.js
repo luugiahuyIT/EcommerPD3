@@ -24,7 +24,7 @@ const CardComponent = ({ book }) => {
       cover={
           <Link to='/'>
             <div className={styles.cardWrapper}>
-              <img alt='example' src={book.image} />
+              <img alt='example' src={book.img} />
               <div className={styles.info}>
                 <Icon>
                   <ShoppingCartOutlined onClick={()=>dispatch(addProduct({...book, quantity: 1 }))}/>
